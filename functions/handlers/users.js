@@ -192,18 +192,17 @@ exports.getAuthenticatedUser= (req, res) =>{
 
     const busboy=new BusBoy({headers: req.headers});
 
-    let imageFileName;
     let imageToBeUploaded= {};
+    let imageFileName;
+    
 
     busboy.on('file',(fieldname,file,filename, encoding ,mimetype) =>{
-      if (mimetype!=='image/jpeg' && mimetype !== 'image/png'){
+      console.log(fieldname,file,filename,encoding,mimetype);
+      if (mimetype !== 'image/jpeg' && mimetype !== 'image/png'){
         return res.status(400).json({error: 'wrong file type submitted'})
-
-      }
-      console.log(fieldname,filename,encoding,mimetype);
-      
+      }    
      
-      const imageExtension= filename.split(".")[filename.split(".").length -1];
+      const imageExtension= filename.split(".") [filename.split(".").length -1];
       imageFileName= `${Math.round(Math.random()*1000000000000).toString()}.${imageExtension}`;
       const filepath = path.join(os.tmpdir(),imageFileName);
       imageToBeUploaded= { filepath, mimetype};
