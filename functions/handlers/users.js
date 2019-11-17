@@ -175,7 +175,7 @@ exports.getAuthenticatedUser= (req, res) =>{
         notificationId: doc.id
       });
     });
-    return res(userData);
+    return res.json(userData);
   })
   .catch(err =>{
     console.error(err);
