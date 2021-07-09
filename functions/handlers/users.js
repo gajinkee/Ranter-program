@@ -32,7 +32,7 @@ exports.signup =  (req, res) => {
         if (doc.exists) {
           return res
             .sendStatus(400)
-            .json({ handle: "This handle is already taken" });
+            .json({ handle: "This user name is already taken" });
         } else {
           return firebase
             .auth()
@@ -132,7 +132,7 @@ exports.getUserDetails =(req,res)=>{
           userImage: doc.data().userImage,
           likeCount: doc.data().likeCount,
           commentCount: doc.data().commentCount,
-          problemId: doc.Id
+          problemId: doc.id
         })
       });
       return res.json(userData);
@@ -159,7 +159,7 @@ exports.getAuthenticatedUser= (req, res) =>{
     data.forEach(doc=>{
       userData.likes.push(doc.data());
     });
-    return db.collection('notifications').where('receipient','==',req.user.handle)
+    return db.collection('notifications').where('recipient','==',req.user.handle)
     .orderBy('createdAT','desc').limit(10).get();
   })
   .then(data=>{
